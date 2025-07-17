@@ -2,8 +2,6 @@
 
 A Python tool for parsing `.BIN` flight logs from ArduPilot/PX4 systems, calculating key flight metrics like total distance, duration, and flight mode times.
 
-Created by Arnav Gorantla
-
 ---
 
 ## Features
