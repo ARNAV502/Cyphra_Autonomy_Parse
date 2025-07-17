@@ -4,7 +4,7 @@ import csv
 from tkinter import Tk, filedialog
 from pymavlink import mavutil
 
-# --- Step 1: Ask user to select a .BIN file ---
+# --- Ask user to select a .BIN file ---
 print("Select your .BIN log file")
 root = Tk()
 root.withdraw()
@@ -17,11 +17,11 @@ if not bin_file_path:
 
 print("Selected:", bin_file_path)
 
-# --- Step 2: Prepare output folder ---
+# --- Prepare output folder ---
 output_folder = "output_csv"
 os.makedirs(output_folder, exist_ok=True)
 
-# --- Step 3: Parse the .BIN file using pymavlink ---
+# --- Parse the .BIN file using pymavlink ---
 mav = mavutil.mavlink_connection(bin_file_path)
 messages_by_type = {}
 
@@ -34,7 +34,7 @@ while True:
     msg_type = msg.get_type()
     messages_by_type.setdefault(msg_type, []).append(msg.to_dict())
 
-# --- Step 4: Save each message type as its own CSV file ---
+# --- Save each message type as its own CSV file ---
 csv_paths = {}
 
 for msg_type, messages in messages_by_type.items():
@@ -52,7 +52,7 @@ for msg_type, messages in messages_by_type.items():
 
     print(f"Saved: {csv_path}")
 
-# --- Step 5: Distance Calculation using XKF1 ---
+# --- Distance Calculation using XKF1 ---
 xkf1_csv_path = csv_paths.get("XKF1")
 if xkf1_csv_path and os.path.exists(xkf1_csv_path):
     total_distance = 0.0
@@ -77,7 +77,7 @@ if xkf1_csv_path and os.path.exists(xkf1_csv_path):
 
     print("\nTotal distance traveled:", round(total_distance, 2), "meters")
 
-    # --- Step 6: Duration Calculation from XKF1 ---
+    # --- Duration Calculation from XKF1 ---
     start_time = None
     end_time = None
 
@@ -102,7 +102,7 @@ if xkf1_csv_path and os.path.exists(xkf1_csv_path):
 else:
     print("\nXKF1.csv not found. Distance/duration not computed.")
 
-# --- Step 7: Mode Durations from MODE.csv ---
+# --- Mode Durations from MODE.csv ---
 mode_csv_path = csv_paths.get("MODE")
 if mode_csv_path and os.path.exists(mode_csv_path):
     mode_names = {
